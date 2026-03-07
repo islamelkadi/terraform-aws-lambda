@@ -303,9 +303,7 @@ terraform destroy -var-file=params/input.tfvars
 
 ```hcl
 module "custom_lambda" {
-  source = "../"
-  
-  # ... other configuration ...
+  source = "github.com/islamelkadi/terraform-aws-lambda"
   
   inline_policies = {
     s3_access = jsonencode({
@@ -324,9 +322,7 @@ module "custom_lambda" {
 
 ```hcl
 module "lambda_with_layers" {
-  source = "../"
-  
-  # ... other configuration ...
+  source = "github.com/islamelkadi/terraform-aws-lambda"
   
   layers = [
     "arn:aws:lambda:us-east-1:123456789012:layer:my-layer:1"
@@ -338,9 +334,7 @@ module "lambda_with_layers" {
 
 ```hcl
 module "container_lambda" {
-  source = "../"
-  
-  # ... other configuration ...
+  source = "github.com/islamelkadi/terraform-aws-lambda"
   
   package_type = "Image"
   image_uri    = "123456789012.dkr.ecr.us-east-1.amazonaws.com/my-lambda:latest"
@@ -363,8 +357,7 @@ module "container_lambda" {
 
 ```hcl
 module "lambda" {
-  source = "github.com/islamelkadi/terraform-aws-lambda?ref=v1.0.0"
-  
+  source = "github.com/islamelkadi/terraform-aws-lambda"
   namespace   = "example"
   environment = "prod"
   name        = "event-processor"
@@ -391,9 +384,7 @@ module "lambda" {
 
 ```hcl
 module "lambda" {
-  source = "github.com/islamelkadi/terraform-aws-lambda?ref=v1.0.0"
-  
-  # Pass security controls from metadata module
+  source = "github.com/islamelkadi/terraform-aws-lambda"
   security_controls = module.metadata.security_controls
   
   namespace   = "example"
@@ -442,8 +433,7 @@ module "lambda" {
 
 ```hcl
 module "lambda" {
-  source = "github.com/islamelkadi/terraform-aws-lambda?ref=v1.0.0"
-  
+  source = "github.com/islamelkadi/terraform-aws-lambda"
   security_controls = module.metadata.security_controls
   
   # Override security controls for development
@@ -474,8 +464,7 @@ module "lambda" {
 
 ```hcl
 module "api_lambda" {
-  source = "github.com/islamelkadi/terraform-aws-lambda?ref=v1.0.0"
-  
+  source = "github.com/islamelkadi/terraform-aws-lambda"
   security_controls = module.metadata.security_controls
   
   # Override VPC requirement for public API
@@ -534,8 +523,7 @@ Both servers run via `uvx` and require no additional installation beyond the [bo
 # ============================================================================
 
 module "basic_lambda" {
-  source = "../"
-
+  source = "github.com/islamelkadi/terraform-aws-lambda"
   namespace   = var.namespace
   environment = var.environment
   name        = "basic-function"
@@ -574,8 +562,7 @@ module "basic_lambda" {
 # ============================================================================
 
 module "production_lambda" {
-  source = "../"
-
+  source = "github.com/islamelkadi/terraform-aws-lambda"
   namespace   = var.namespace
   environment = "prod"
   name        = "data-processor"
@@ -633,8 +620,7 @@ module "production_lambda" {
 # ============================================================================
 
 module "api_lambda" {
-  source = "../"
-
+  source = "github.com/islamelkadi/terraform-aws-lambda"
   namespace   = var.namespace
   environment = var.environment
   name        = "public-api"
