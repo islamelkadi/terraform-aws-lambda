@@ -769,11 +769,6 @@ module "api_lambda" {
 | <a name="output_tags"></a> [tags](#output\_tags) | Tags applied to the Lambda function |
 
 
-## License
-
-MIT Licensed. See [LICENSE](LICENSE) for full details.
-<!-- END_TF_DOCS -->
-
 ## Examples
 
 See [example/](example/) for a complete working example with all features.
