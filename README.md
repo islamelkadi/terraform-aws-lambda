@@ -17,12 +17,11 @@ make bootstrap
 
 This will install/upgrade: tfenv, Terraform (via tfenv), tflint, terraform-docs, checkov, and pre-commit.
 
-
 ## Security
 
 ### Environment-Based Security Controls
 
-Security controls are automatically applied based on the environment through the [terraform-aws-metadata](https://github.com/islamelkadi/terraform-aws-metadata?tab=readme-ov-file#security-profiles){:target="_blank"} module's security profiles:
+Security controls are automatically applied based on the environment through the [terraform-aws-metadata](https://github.com/islamelkadi/terraform-aws-metadata?tab=readme-ov-file#security-profiles) module's security profiles:
 
 | Control | Dev | Staging | Prod |
 |---------|-----|---------|------|
@@ -33,7 +32,7 @@ Security controls are automatically applied based on the environment through the
 | X-Ray tracing | Optional | Required | Required |
 | Log retention | 7 days | 90 days | 365 days |
 
-For full details on security profiles and how controls vary by environment, see the <a href="https://github.com/islamelkadi/terraform-aws-metadata?tab=readme-ov-file#security-profiles" target="_blank">Security Profiles</a> documentation.
+For full details on security profiles and how controls vary by environment, see the [Security Profiles](https://github.com/islamelkadi/terraform-aws-metadata?tab=readme-ov-file#security-profiles) documentation.
 ## Examples Included
 
 ### 1. Basic Lambda Function
@@ -509,7 +508,6 @@ module "api_lambda" {
 }
 ```
 
-
 ## MCP Servers
 
 This module includes two [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers configured in `.kiro/settings/mcp.json` for use with Kiro:
@@ -522,7 +520,6 @@ This module includes two [Model Context Protocol (MCP)](https://modelcontextprot
 Both servers run via `uvx` and require no additional installation beyond the [bootstrap](#prerequisites) step.
 
 <!-- BEGIN_TF_DOCS -->
-
 
 ## Usage
 
@@ -767,7 +764,6 @@ module "api_lambda" {
 | <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | ARN of the IAM role used by the Lambda function |
 | <a name="output_role_name"></a> [role\_name](#output\_role\_name) | Name of the IAM role used by the Lambda function |
 | <a name="output_tags"></a> [tags](#output\_tags) | Tags applied to the Lambda function |
-
 
 ## Examples
 
