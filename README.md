@@ -17,6 +17,23 @@ make bootstrap
 
 This will install/upgrade: tfenv, Terraform (via tfenv), tflint, terraform-docs, checkov, and pre-commit.
 
+
+## Security
+
+### Environment-Based Security Controls
+
+Security controls are automatically applied based on the environment through the [terraform-aws-metadata](https://github.com/islamelkadi/terraform-aws-metadata?tab=readme-ov-file#security-profiles){:target="_blank"} module's security profiles:
+
+| Control | Dev | Staging | Prod |
+|---------|-----|---------|------|
+| KMS customer-managed keys | Optional | Required | Required |
+| VPC integration | Optional | Required | Required |
+| Reserved concurrency | Optional | Required | Required |
+| Dead letter queue | Optional | Required | Required |
+| X-Ray tracing | Optional | Required | Required |
+| Log retention | 7 days | 90 days | 365 days |
+
+For full details on security profiles and how controls vary by environment, see the <a href="https://github.com/islamelkadi/terraform-aws-metadata?tab=readme-ov-file#security-profiles" target="_blank">Security Profiles</a> documentation.
 ## Examples Included
 
 ### 1. Basic Lambda Function
@@ -492,20 +509,6 @@ module "api_lambda" {
 }
 ```
 
-## Environment-Based Security Controls
-
-Security controls are automatically applied based on the environment through the [terraform-aws-metadata](https://github.com/islamelkadi/terraform-aws-metadata?tab=readme-ov-file#security-profiles){:target="_blank"} module's security profiles:
-
-| Control | Dev | Staging | Prod |
-|---------|-----|---------|------|
-| KMS customer-managed keys | Optional | Required | Required |
-| VPC integration | Optional | Required | Required |
-| Reserved concurrency | Optional | Required | Required |
-| Dead letter queue | Optional | Required | Required |
-| X-Ray tracing | Optional | Required | Required |
-| Log retention | 7 days | 90 days | 365 days |
-
-For full details on security profiles and how controls vary by environment, see the <a href="https://github.com/islamelkadi/terraform-aws-metadata?tab=readme-ov-file#security-profiles" target="_blank">Security Profiles</a> documentation.
 
 ## MCP Servers
 
@@ -765,9 +768,6 @@ module "api_lambda" {
 | <a name="output_role_name"></a> [role\_name](#output\_role\_name) | Name of the IAM role used by the Lambda function |
 | <a name="output_tags"></a> [tags](#output\_tags) | Tags applied to the Lambda function |
 
-## Example
-
-See [example/](example/) for a complete working example with all features.
 
 ## License
 
