@@ -1,92 +1,41 @@
-# Complete Lambda Function Example
+# Lambda Function Examples
 
-This example demonstrates a full-featured Lambda function deployment with VPC integration, custom IAM policies, KMS encryption, and all available configuration options.
+This example demonstrates various Lambda function configurations with security control overrides.
 
-## Features
+## Structure
 
-- VPC deployment in private subnets
-- Custom IAM policies for DynamoDB and KMS access
-- KMS encryption for environment variables
-- Reserved concurrency configuration
-- X-Ray tracing enabled
-- CloudWatch Logs with 30-day retention
-- S3-based deployment package
-- Custom security group configuration
+This example includes:
+- **main.tf**: Primary module examples (3 Lambda configurations)
+- **kms.tf**: Supporting KMS key infrastructure
+- **vpc.tf**: Supporting VPC and security group infrastructure
+- **dlq.tf**: Supporting SQS dead letter queue infrastructure
 
-## Architecture
+## Examples Included
 
-```
-┌───────────────────────────────────────┐
-│ VPC (10.0.0.0/16)                     │
-│                                       │
-│  ┌─────────────────────────────────┐  │
-│  │ Private Subnets                 │  │
-│  │ - 10.0.10.0/24 (AZ1)            │  │
-│  │ - 10.0.11.0/24 (AZ2)            │  │
-│  │                                 │  │
-│  │  ┌────────────────────────────┐ │  │
-│  │  │ Lambda Function            │ │  │
-│  │  │ - X-Ray Tracing            │ │  │
-│  │  │ - CloudWatch Logs          │ │  │
-│  │  │ - KMS Encrypted Env Vars   │ │  │
-│  │  └────────────────────────────┘ │  │
-│  └─────────────────────────────────┘  │
-└───────────────────────────────────────┘
-         │
-         ├─→ DynamoDB Table (encrypted)
-         └─→ KMS Key (for encryption)
-```
+### 1. Basic Lambda Function
+Minimal configuration without VPC or KMS requirements. Suitable for simple, stateless functions.
+
+### 2. Production Lambda with Full Compliance
+Complete security configuration with VPC integration, KMS encryption, DLQ, reserved concurrency, and extended log retention.
+
+### 3. API Lambda (API Gateway Integration)
+Public-facing Lambda optimized for API Gateway with KMS encryption and DLQ, but without VPC to reduce cold start latency.
+
+## Supporting Infrastructure
+
+The supporting infrastructure files create real AWS resources from remote GitHub modules:
+- **KMS Key**: Provides encryption for environment variables
+- **VPC & Security Group**: Provides network isolation for production Lambda
+- **Dead Letter Queue**: SQS queue for failed invocations
 
 ## Prerequisites
 
-1. AWS credentials configured
-2. S3 bucket for Lambda deployment packages
-3. Lambda deployment package uploaded to S3
+Lambda deployment packages are required in `lambda-packages/` directory:
+- `basic.zip`
+- `processor.zip`
+- `api.zip`
 
 ## Usage
-
-1. Create and upload Lambda deployment package:
-
-```bash
-# Create a sample handler
-mkdir -p lambda-src
-cat > lambda-src/handlers.py << 'EOF'
-import json
-import os
-
-def event_processor(event, context):
-    table_name = os.environ.get('EVENTS_TABLE_NAME')
-    
-    return {
-        'statusCode': 200,
-        'body': json.dumps({
-            'message': 'Event processed',
-            'table': table_name
-        })
-    }
-EOF
-
-# Package it
-cd lambda-src
-zip -r ../lambda-package.zip .
-cd ..
-
-# Upload to S3
-aws s3 cp lambda-package.zip s3://my-lambda-deployments/lambda/event-processor/v1.0.0.zip
-```
-
-2. Update variables:
-
-```bash
-# Edit variables.tf or create terraform.tfvars
-cat > terraform.tfvars << EOF
-deployment_bucket = "my-lambda-deployments"
-namespace         = "example"
-environment       = "dev"
-EOF
-```
-
-3. Deploy:
 
 ```bash
 terraform init
@@ -94,30 +43,5 @@ terraform plan
 terraform apply
 ```
 
-4. Test the function:
-
-```bash
-aws lambda invoke \
-  --function-name example-dev-event-processor-corporate-actions \
-  --region ca-central-1 \
-  --payload '{"test": "event"}' \
-  response.json
-
-cat response.json
-```
-
-## Cleanup
-
-```bash
-terraform destroy
-```
-
-## Cost Estimate
-
-For this example configuration:
-- Lambda: ~$0.20/million requests + $0.0000166667/GB-second
-- CloudWatch Logs: ~$0.50/GB ingested
-- VPC: NAT Gateway not included (would add ~$32/month)
-- KMS: $1/month for key + $0.03/10,000 requests
-
-Estimated monthly cost for low usage: ~$2-5
+<!-- BEGIN_TF_DOCS -->
+<!-- END_TF_DOCS -->
