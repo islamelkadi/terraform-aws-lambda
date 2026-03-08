@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/islamelkadi/terraform-aws-lambda/compare/v1.0.0...v1.0.1) (2026-03-08)
+
+
+### Code Refactoring
+
+* enhance examples with real infrastructure and improve code quality ([cd0a8d0](https://github.com/islamelkadi/terraform-aws-lambda/commit/cd0a8d0657033b765160a57a0421d62986cad19d))
+
 ## 1.0.0 (2026-03-07)
 
 
