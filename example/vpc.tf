@@ -12,7 +12,7 @@
 #   subnet_ids = module.vpc.private_subnet_ids
 
 module "vpc" {
-  source = "git::https://github.com/islamelkadi/terraform-aws-vpc.git//modules/vpc"
+  source = "git::https://github.com/islamelkadi/terraform-aws-vpc.git//modules/vpc?ref=v1.0.0"
 
   namespace   = var.namespace
   environment = var.environment
@@ -34,7 +34,7 @@ module "vpc" {
 }
 
 module "security_group" {
-  source = "git::https://github.com/islamelkadi/terraform-aws-vpc.git//modules/security-group"
+  source = "git::https://github.com/islamelkadi/terraform-aws-vpc.git//modules/security-group?ref=v1.0.0"
 
   namespace   = var.namespace
   environment = var.environment

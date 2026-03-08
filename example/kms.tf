@@ -10,7 +10,7 @@
 #   kms_key_arn = module.kms_key.key_arn
 
 module "kms_key" {
-  source = "git::https://github.com/islamelkadi/terraform-aws-kms.git"
+  source = "git::https://github.com/islamelkadi/terraform-aws-kms.git?ref=v1.0.0"
 
   namespace   = var.namespace
   environment = var.environment

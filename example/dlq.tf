@@ -10,7 +10,7 @@
 #   dead_letter_queue_arn = module.dead_letter_queue.queue_arn
 
 module "dead_letter_queue" {
-  source = "git::https://github.com/islamelkadi/terraform-aws-sqs.git"
+  source = "git::https://github.com/islamelkadi/terraform-aws-sqs.git?ref=v1.0.0"
 
   namespace   = var.namespace
   environment = var.environment
