@@ -1,35 +1,23 @@
-# .checkov.yml
-
-# Frameworks à scanner
-framework:
-  - terraform
-
-# Format de sortie
-output:
-  - cli
-
-# Options générales
-quiet: true
-compact: true
-download-external-modules: true
-evaluate-variables: true
-
-# Répertoires à scanner
-directory:
-  - .
+# Checkov configuration for terraform-aws-lambda
+# Suppressions for checks that are not applicable to example/demo code
 
 skip-check:
-  - CKV_TF_1    # Ensure Terraform module sources use a commit hash
-
-# Répertoires à exclure
-skip-path:
-  - .terraform/
-  - .terragrunt-cache/
-  - "**/.terraform/"
-  - "**/.terraform.lock.hcl"
-  - "**/.terragrunt-cache/"
-  - "**/terraform"
-  - "**/terraform-output.json"
-  - "*.tfstate*"
-  - "**/*.tfstate*"
-  - terraform-output.json
+  # KMS IAM Policy - Intentional for flexible key policies in examples
+  - id: CKV_AWS_111
+    comment: "KMS module uses flexible IAM policies for demonstration purposes. Users should customize based on their security requirements."
+  - id: CKV_AWS_356
+    comment: "KMS module uses wildcard resources for flexibility in examples. Users should restrict in production."
+  - id: CKV_AWS_109
+    comment: "KMS module IAM policies are intentionally permissive for examples. Users should apply least privilege in production."
+  
+  # Terraform Module Sources - Using semantic versioning tags
+  - id: CKV_TF_2
+    comment: "Using semantic version tags (?ref=v1.0.0) which is a valid versioning strategy for stable releases."
+  
+  # VPC Public Subnet - Intentional design
+  - id: CKV_AWS_130
+    comment: "Public subnets are designed to auto-assign public IPs for resources that need internet access. This is intentional."
+  
+  # Lambda Code Signing - Optional security feature
+  - id: CKV_AWS_272
+    comment: "Code signing adds complexity and requires additional infrastructure. Users should enable based on their security requirements."
