@@ -1,3 +1,7 @@
+# Primary Module Example - This demonstrates the terraform-aws-lambda module
+# Supporting infrastructure (VPC, KMS, DLQ) is defined in separate files
+# to keep this example focused on the module's core functionality.
+#
 # Lambda Function Examples
 # Demonstrates various Lambda configurations with security control overrides
 
@@ -63,18 +67,18 @@ module "production_lambda" {
   memory_size = 2048
   timeout     = 300
 
-  # VPC Configuration - replace with your actual VPC resources
+  # Direct reference to vpc.tf module outputs
   vpc_config = {
-    subnet_ids         = var.vpc_subnet_ids
-    security_group_ids = var.vpc_security_group_ids
+    subnet_ids         = module.vpc.private_subnet_ids
+    security_group_ids = [module.security_group.security_group_id]
   }
 
-  # KMS Encryption - replace with your actual KMS key ARN
-  kms_key_arn = var.kms_key_arn
+  # Direct reference to kms.tf module output
+  kms_key_arn = module.kms_key.key_arn
 
-  # Dead Letter Queue - replace with your actual SQS queue ARN
+  # Direct reference to dlq.tf module output
   dead_letter_config = {
-    target_arn = var.dlq_arn
+    target_arn = module.dead_letter_queue.queue_arn
   }
 
   # Reserved Concurrency - prevent resource exhaustion
@@ -128,12 +132,12 @@ module "api_lambda" {
     justification           = "Public-facing Lambda invoked by API Gateway. VPC integration would add cold start latency without security benefit."
   }
 
-  # KMS encryption for environment variables
-  kms_key_arn = var.kms_key_arn
+  # Direct reference to kms.tf module output
+  kms_key_arn = module.kms_key.key_arn
 
-  # Dead letter queue
+  # Direct reference to dlq.tf module output
   dead_letter_config = {
-    target_arn = var.dlq_arn
+    target_arn = module.dead_letter_queue.queue_arn
   }
 
   reserved_concurrent_executions = 10
