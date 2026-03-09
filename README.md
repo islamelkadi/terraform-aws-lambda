@@ -33,6 +33,26 @@ Security controls are automatically applied based on the environment through the
 | Log retention | 7 days | 90 days | 365 days |
 
 For full details on security profiles and how controls vary by environment, see the [Security Profiles](https://github.com/islamelkadi/terraform-aws-metadata?tab=readme-ov-file#security-profiles) documentation.
+
+### Security Scan Suppressions
+
+This module suppresses certain Checkov security checks that are either not applicable to example/demo code or represent optional features. The following checks are suppressed in `.checkov.yaml`:
+
+**Module Source Versioning (CKV_TF_1, CKV_TF_2)**
+- Uses semantic version tags (`?ref=v1.0.0`) instead of commit hashes for better maintainability and readability
+
+**VPC Public Subnet (CKV_AWS_130)**
+- Public subnets are designed to auto-assign public IPs for resources that need internet access
+
+**Lambda Code Signing (CKV_AWS_272)**
+- Code signing adds complexity and requires additional infrastructure. Users should enable based on their security requirements
+
+**CloudWatch Log Retention (CKV_AWS_338)**
+- Log retention of 1 year adds cost. Examples use shorter retention for cost efficiency. Users should configure based on compliance requirements
+
+**KMS IAM Policies (CKV_AWS_111, CKV_AWS_356, CKV_AWS_109)**
+- KMS module uses flexible IAM policies for demonstration purposes. Users should customize based on their security requirements
+
 ## Examples Included
 
 ### 1. Basic Lambda Function
