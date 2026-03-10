@@ -16,3 +16,6 @@ skip-check:
   
   # Lambda Code Signing - Optional security feature
   - CKV_AWS_272  # Code signing adds complexity and requires additional infrastructure
+  
+  # CloudWatch Log Retention - Example code
+  - CKV_AWS_338  # Log retention of 1 year adds cost. Examples use shorter retention for cost efficiency
