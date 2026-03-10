@@ -1,5 +1,9 @@
 # Terraform AWS Lambda Module
 
+[![Terraform Security](https://github.com/islamelkadi/terraform-aws-lambda/actions/workflows/terraform-security.yaml/badge.svg)](https://github.com/islamelkadi/terraform-aws-lambda/actions/workflows/terraform-security.yaml)
+[![Terraform Lint & Validation](https://github.com/islamelkadi/terraform-aws-lambda/actions/workflows/terraform-lint.yaml/badge.svg)](https://github.com/islamelkadi/terraform-aws-lambda/actions/workflows/terraform-lint.yaml)
+[![Terraform Docs](https://github.com/islamelkadi/terraform-aws-lambda/actions/workflows/terraform-docs.yaml/badge.svg)](https://github.com/islamelkadi/terraform-aws-lambda/actions/workflows/terraform-docs.yaml)
+
 A reusable Terraform module for creating AWS Lambda functions with AWS Security Hub compliance (FSBP, CIS, NIST 800-53, NIST 800-171, PCI DSS), VPC integration, KMS encryption, and flexible security control overrides.
 
 ## Prerequisites
@@ -39,19 +43,16 @@ For full details on security profiles and how controls vary by environment, see 
 This module suppresses certain Checkov security checks that are either not applicable to example/demo code or represent optional features. The following checks are suppressed in `.checkov.yaml`:
 
 **Module Source Versioning (CKV_TF_1, CKV_TF_2)**
-- Uses semantic version tags (`?ref=v1.0.0`) instead of commit hashes for better maintainability and readability
-
-**VPC Public Subnet (CKV_AWS_130)**
-- Public subnets are designed to auto-assign public IPs for resources that need internet access
-
-**Lambda Code Signing (CKV_AWS_272)**
-- Code signing adds complexity and requires additional infrastructure. Users should enable based on their security requirements
-
-**CloudWatch Log Retention (CKV_AWS_338)**
-- Log retention of 1 year adds cost. Examples use shorter retention for cost efficiency. Users should configure based on compliance requirements
+- Suppressed because we use semantic version tags (`?ref=v1.0.0`) instead of commit hashes for better maintainability and readability
+- Semantic versioning is a valid and widely-accepted versioning strategy for stable releases
 
 **KMS IAM Policies (CKV_AWS_111, CKV_AWS_356, CKV_AWS_109)**
-- KMS module uses flexible IAM policies for demonstration purposes. Users should customize based on their security requirements
+- Suppressed in example code where KMS modules use flexible IAM policies for demonstration purposes
+- Production deployments should customize KMS policies based on specific security requirements and apply least privilege principles
+
+**Lambda Optional Features**
+- **VPC Public Subnets (CKV_AWS_130)**: Public subnets are designed to auto-assign public IPs for resources that need internet access; this is intentional
+- **Code Signing (CKV_AWS_272)**: Optional security feature that adds complexity and requires additional infrastructure; enable based on security requirements
 
 ## Examples Included
 
